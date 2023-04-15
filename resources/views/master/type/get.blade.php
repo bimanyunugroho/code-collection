@@ -29,7 +29,6 @@
         </div>
     </div>
 @endsection
-
 @push('scripts')
 <script>
     $(function() {
@@ -39,7 +38,9 @@
             ajax: '{{ route('getServersideType') }}',
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                { data: 'type_koding', name: 'type_koding' },
+                { data: 'type_koding', name: 'type_koding', render: function(data, type, row) {
+                    return '<span class="badge" style="background-color: ' + row.colors + '; color: white;">' + data + '</span>';
+                } },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
             ]

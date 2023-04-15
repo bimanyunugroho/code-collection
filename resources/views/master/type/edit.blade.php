@@ -19,6 +19,10 @@
                         <div class="mb-3">
                           <label for="type_koding" class="form-label">Tipe Koding</label>
                           <input type="text" class="form-control" id="type_koding" name="type_koding" placeholder="Masukkan Nilai Type Koding..." required autocomplete="false" value="{{ $type->type_koding }}">
+                          <div class="mb-3">
+                            <label for="colors" class="form-label">Warna</label>
+                            <input type="color" class="form-control" id="colors" name="colors" required value="{{ old('colors', $type->colors) }}">
+                          </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

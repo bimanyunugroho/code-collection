@@ -40,7 +40,9 @@
             ajax: '{{ route('getServersideCodex') }}',
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                { data: 'type_uuid', name: 'type_uuid' },
+                { data: 'type_koding', name: 'type_koding', render: function(data, type, row) {
+                    return '<span class="badge" style="background-color: ' + row.colors + '; color: white;">' + data + '</span>';
+                } },
                 { data: 'judul', name: 'judul' },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'aksi', name: 'aksi', orderable: false, searchable: false }

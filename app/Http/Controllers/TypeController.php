@@ -26,7 +26,7 @@ class TypeController extends Controller
 
     public function getServersideType()
     {
-        $data = Type::select(['uuid', 'slug', 'type_koding', 'created_at']);
+        $data = Type::select(['uuid', 'slug', 'type_koding','colors', 'created_at']);
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -80,6 +80,7 @@ class TypeController extends Controller
         $type->uuid = Str::uuid();
         $type->type_koding = $request->input('type_koding');
         $type->slug = Str::slug($request->input('type_koding'));
+        $type->colors = $request->input('colors');
 
         try {
             $type->save();
@@ -118,7 +119,8 @@ class TypeController extends Controller
     public function update(Request $request, Type $type)
     {
         $validator = Validator::make($request->all(), [
-            'type_koding' => 'required|unique:types',
+            'type_koding' => [$this->isUpdate(), 'string'],
+            'colors' => [$this->isUpdate(), 'string'],
         ]);
 
         if ($validator->fails()) {
@@ -128,6 +130,7 @@ class TypeController extends Controller
 
         $type->type_koding = $request->input('type_koding');
         $type->slug = Str::slug($request->input('type_koding'));
+        $type->colors = $request->input('colors');
 
         try {
             $type->save();
@@ -139,6 +142,11 @@ class TypeController extends Controller
         }
 
         return $redirect;
+    }
+
+    public function isUpdate()
+    {
+        return request()->isMethod('POST') ? 'required' : 'sometimes';
     }
 
     /**

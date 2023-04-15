@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('uuid')->primary();
             $table->string('slug')->unique();
             $table->string('type_koding')->unique();
+            $table->string('colors');
             $table->timestamps();
         });
     }

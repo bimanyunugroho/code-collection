@@ -17,7 +17,8 @@ class TypeResource extends ResourceCollection
         return [
             'uuid'  => $this->uuid,
             'slug'  => $this->slug,
-            'type_koding'   => $this->type_koding
+            'type_koding'   => $this->type_koding,
+            'colors' => $this->colors
         ];
     }
 }

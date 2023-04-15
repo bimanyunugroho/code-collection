@@ -14,7 +14,8 @@ class Type extends Model
     protected $keyType = 'string';
     protected $fillable = [
         'slug',
-        'type_koding'
+        'type_koding',
+        'colors'
     ];
 
     /* Buat slug */

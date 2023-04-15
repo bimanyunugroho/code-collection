@@ -30,14 +30,14 @@ class CodexController extends Controller
     public function getServersideCodex()
     {
         $data = Codex::leftJoin('types', 'types.uuid', '=', 'codexes.type_uuid')
-            ->select('codexes.uuid', 'codexes.type_uuid', 'types.type_koding', 'codexes.judul', 'codexes.slug', 'codexes.keterangan', 'codexes.created_at');
+            ->select('codexes.uuid', 'codexes.type_uuid', 'types.type_koding', 'types.colors', 'codexes.judul', 'codexes.slug', 'codexes.keterangan', 'codexes.created_at');
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('created_at', function ($row) {
                 return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
             })
-            ->editColumn('type_uuid', function ($row) {
+            ->editColumn('type_koding', function ($row) {
                 return $row->types->type_koding;
             })
             ->addColumn('DT_RowIndex', function ($row) {
