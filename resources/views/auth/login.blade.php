@@ -2,7 +2,11 @@
 
 @section('auth')
 <div class="row">
-    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+    <div class="col-lg-6 d-none d-lg-block bg-login-image">
+        <div class="d-flex align-content-center flex-wrap justify-content-center my-4">
+            <span class="font-weight-bolder text-center m-0 badge badge-primary">Agar gambar bisa terganti tekan <b>CTRL + SHIFT + R</b></span>
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="p-5">
             <div class="text-center">
