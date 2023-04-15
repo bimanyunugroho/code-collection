@@ -72,6 +72,7 @@
 
 </body>
 @else
+@auth
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -88,6 +89,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    @if(auth()->check() && (request()->is('/') || request()->is('home')))
+                    <h1>Selamat Datang, <span style="border-bottom: 5px solid #3b61d1;">{{ auth()->user()->username }}</span></h1>
+                @endif
+
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -144,6 +150,7 @@
     @stack('scripts')
 
 </body>
+@endauth
 @endif
 
 </html>

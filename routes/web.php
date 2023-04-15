@@ -24,7 +24,8 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('welcome');
-});
+})->middleware('auth');
+
 
 /* Route Register */
 Route::middleware(['guest'])->group(function () {
