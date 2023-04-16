@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
+            $table->foreignId('user_id')
+                ->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('type_koding')->unique();
             $table->string('colors');

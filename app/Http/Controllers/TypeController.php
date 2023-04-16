@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,7 +27,8 @@ class TypeController extends Controller
 
     public function getServersideType()
     {
-        $data = Type::select(['uuid', 'slug', 'type_koding','colors', 'created_at']);
+        $user = Auth::user();
+        $data = Type::select(['uuid', 'user_id', 'slug', 'type_koding','colors', 'created_at']);
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -36,19 +38,32 @@ class TypeController extends Controller
             ->addColumn('DT_RowIndex', function ($row) {
                 return $row->uuid;
             })
-            ->addColumn('aksi', function ($row) {
-                $btn = '<a href="' . route('type.edit', $row->slug) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i> Edit</a>';
-                $btn .= '<form action="' . route('type.destroy', $row->slug) . '" method="post" class="d-inline-block">
-                    ' . method_field('DELETE') . '
-                    ' . csrf_field() . '
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"><i class="fas fa-trash"></i> Delete</button>
-                </form>';
+            ->addColumn('aksi', function ($row) use ($user) {
+                $btn = '';
+                if ($row->canEdit($user)) {
+                    $btn .= '<a href="' . route('type.edit', $row->slug) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i> Edit</a>';
+                } else {
+                    $btn .= '<span class="badge badge-danger">Maaf, anda bukan pembuat dari master <b>Tipe Koding</b> ini!</span>';
+                }
+
+                if ($row->canDelete($user)) {
+                    $btn .= '<form action="' . route('type.destroy', $row->slug) . '" method="post" class="d-inline-block">
+                            ' . method_field('DELETE') . '
+                            ' . csrf_field() . '
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"><i class="fas fa-trash"></i> Delete</button>
+                        </form>';
+                } else {
+
+                }
 
                 return $btn;
             })
             ->rawColumns(['aksi'])
             ->make(true);
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -78,6 +93,7 @@ class TypeController extends Controller
 
         $type = new Type;
         $type->uuid = Str::uuid();
+        $type->user_id = Auth::user()->id;
         $type->type_koding = $request->input('type_koding');
         $type->slug = Str::slug($request->input('type_koding'));
         $type->colors = $request->input('colors');
@@ -105,12 +121,16 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        $data = [
-            'title' => 'Master Data Tipe Koding!',
-            'type' => $type
-        ];
+        if ($type->user_id !== Auth::id()) {
+            return abort(403);
+        } else {
+            $data = [
+                'title' => 'Master Data Tipe Koding!',
+                'type' => $type
+            ];
 
-        return view('./master/type/edit', $data);
+            return view('./master/type/edit', $data);
+        }
     }
 
     /**

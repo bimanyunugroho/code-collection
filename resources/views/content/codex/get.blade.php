@@ -37,10 +37,11 @@
         $('.dataTable').DataTable({
             processing: true,
             serverSide: true,
+            search: true,
             ajax: '{{ route('getServersideCodex') }}',
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                { data: 'type_koding', name: 'type_koding', render: function(data, type, row) {
+                { data: 'type_koding', name: 'types.type_koding', render: function(data, type, row) {
                     return '<span class="badge" style="background-color: ' + row.colors + '; color: white;">' + data + '</span>';
                 } },
                 { data: 'judul', name: 'judul' },

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\UpdateCodexRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CodexController extends Controller
@@ -30,27 +31,27 @@ class CodexController extends Controller
     public function getServersideCodex()
     {
         $data = Codex::leftJoin('types', 'types.uuid', '=', 'codexes.type_uuid')
-            ->select('codexes.uuid', 'codexes.type_uuid', 'types.type_koding', 'types.colors', 'codexes.judul', 'codexes.slug', 'codexes.keterangan', 'codexes.created_at');
+        ->select('codexes.uuid', 'codexes.type_uuid', 'types.uuid', 'types.type_koding', 'types.colors', 'codexes.judul', 'codexes.slug', 'codexes.keterangan', 'codexes.created_at');
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('created_at', function ($row) {
                 return Carbon::parse($row->created_at)->format('Y-m-d H:i:s');
             })
-            ->editColumn('type_koding', function ($row) {
-                return $row->types->type_koding;
-            })
             ->addColumn('DT_RowIndex', function ($row) {
                 return $row->uuid;
             })
             ->addColumn('aksi', function ($row) {
+                $user_id = auth()->user()->id;
                 $btn = '<a href="' . route('codex.show', $row->slug) . '" class="btn btn-sm btn-info mr-1"><i class="fas fa-eye"></i> View</a>';
-                $btn .= '<a href="' . route('codex.edit', $row->slug) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i> Edit</a>';
-                $btn .= '<form action="' . route('codex.destroy', $row->slug) . '" method="post" class="d-inline-block">
-                    ' . method_field('DELETE') . '
-                    ' . csrf_field() . '
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"><i class="fas fa-trash"></i> Delete</button>
-                </form>';
+                if ($row->types->user_id == $user_id) {
+                    $btn .= '<a href="' . route('codex.edit', $row->slug) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i> Edit</a>';
+                    $btn .= '<form action="' . route('codex.destroy', $row->slug) . '" method="post" class="d-inline-block">
+                        ' . method_field('DELETE') . '
+                        ' . csrf_field() . '
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"><i class="fas fa-trash"></i> Delete</button>
+                    </form>';
+                }
 
                 return $btn;
             })
@@ -58,18 +59,23 @@ class CodexController extends Controller
             ->make(true);
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        $user_id = auth()->user()->id;
+
         $data = [
-            'title'     => 'Koleksi Koding',
-            'types'     => Type::latest()->get()
+            'title' => 'Koleksi Koding',
+            'types' => Type::where('user_id', $user_id)->latest()->get()
         ];
 
         return view('content.codex.add', $data);
     }
+
 
     /**
      * Store a newly created resource in storage.
