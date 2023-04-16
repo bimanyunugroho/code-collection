@@ -26,11 +26,11 @@
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember
-                            Me</label>
+                        <input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="remember">{{ __('Remember me') }}</label>
                     </div>
                 </div>
+
                 <button class="btn btn-primary btn-block btn-user" type="submit">Login</button>
             </form>
             <hr>
