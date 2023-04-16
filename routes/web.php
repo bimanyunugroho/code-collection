@@ -53,10 +53,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('/profile/{id}/edit', [AuthController::class, 'formProfile'])->name('profile.edit');
+    Route::put('/profile/{id}', [AuthController::class, 'profile'])->name('profile.update');
+
     Route::get('/{any}', function () {
         Alert::error('Error', 'Anda tidak diizinkan untuk mengakses halaman ini!');
         return redirect()->route('home');
     })->where('any', '^(?!login|register|type|codex).*$');
+
 });
 
 Route::middleware(['auth'])->get('/home', function () {

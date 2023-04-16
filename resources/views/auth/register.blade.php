@@ -33,24 +33,6 @@
                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                         placeholder="Email Address" name="email" required autocomplete="false" value="{{ old('email') }}">
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                        <div class="input-group">
-                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password" required>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleInputPassword"><i class="fa fa-eye"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" name="password_confirmation" required>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleRepeatPassword"><i class="fa fa-eye"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <button class="btn btn-primary btn-user btn-block" type="submit">Register</button>
             </form>
             <hr>

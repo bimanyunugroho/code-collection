@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -87,4 +88,43 @@ class AuthController extends Controller
         return $field;
     }
 
+    public function formProfile($id)
+    {
+        $data = [
+            'title' => 'Setting Profile User',
+            'desc' => 'Halo, ' . auth()->user()->username,
+            'users' => User::findOrFail($id)
+        ];
+
+        return view('auth.user.setting', $data);
+    }
+
+    public function profile(Request $request, $id)
+    {
+        $request->validate([
+            'first_name' => [$this->isUpdate(), 'string', 'max:255'],
+            'last_name' => [$this->isUpdate(), 'string', 'max:255'],
+            'username' => [$this->isUpdate(), 'string', 'max:255', Rule::unique('users')->ignore($id)],
+            'email' => [$this->isUpdate(), 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+        ]);
+
+        $user = User::findOrFail($id);
+        $updateUser = $user->update($request->only(['first_name', 'last_name', 'username', 'email']));
+
+        if ($updateUser) {
+            Alert::success('success', 'Selamat, Profile ada berhasil diperbaharui!');
+            $redirect = redirect()->back();
+        } else {
+            Alert::error('error', 'Sepertinya ada yang salah!');
+            $redirect = redirect()->back();
+        }
+
+        return $redirect;
+    }
+
+
+    public function isUpdate()
+    {
+        return request()->isMethod('POST') ? 'required' : 'sometimes';
+    }
 }
