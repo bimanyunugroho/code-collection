@@ -136,9 +136,11 @@ class CodexController extends Controller
      */
     public function edit(Codex $codex)
     {
+        $user_id = auth()->user()->id;
+
         $data = [
             'title'     => 'Koleksi Koding',
-            'types'     => Type::latest()->get(),
+            'types'     => Type::where('user_id', $user_id)->latest()->get(),
             'codex'     => $codex
         ];
 

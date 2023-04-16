@@ -18,7 +18,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                           <label for="type_uuid" class="form-label">Tipe Koding</label>
-                          <select name="type_uuid" id="type_uuid" class="form-control">
+                          <select name="type_uuid" id="type_uuid" class="form-control selectType">
                             <option value="0" {{ old('type_uuid', $codex->type_uuid) == 0 ? 'selected' : '' }}>Pilih Tipe</option>
                             @foreach ($types as $type)
                                <option value="{{ $type->uuid }}" {{ old('type_uuid', $codex->type_uuid) == $type->uuid ? 'selected' : '' }}>{{ $type->type_koding }}</option>
@@ -50,13 +50,14 @@
 @endsection
 
 @push('scripts')
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('my-editor', {
         startupMode: 'source',
         removePlugins: 'elementspath,resize,link,unlink,pastefromword,scayt,image,flash,find,replace,selectall,form,checkbox,radiobutton,textfield,textarea,button,select,hiddenfield,underline,strikethrough,subscript,superscript,indent,outdent,blockquote,createDiv,stylescombo,format,font,fontSize,color,textTransform,justify,indentblock,bidi,about,maximize,showblocks,table',
         removeButtons: 'Bold,Italic,Underline,Strike,Subscript,Superscript,NumberedList,BulletedList,Outdent,Indent,Blockquote,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,Undo,Redo,Scayt,Image,Flash,Table,HorizontalRule,SpecialChar,PageBreak,RemoveFormat,Paste,PasteText'
       });
+
+      $('.selectType').select2();
 
 </script>
 @endpush
