@@ -122,6 +122,42 @@ class AuthController extends Controller
         return $redirect;
     }
 
+    public function formSetting($id)
+    {
+        $data = [
+            'title' => 'Setting Password',
+            'desc'  => 'Halo, ' . auth()->user()->username,
+            'settings' => User::findOrFail($id)
+        ];
+
+        return view('auth.user.password', $data);
+    }
+
+    public function setting(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'password' => [$this->isUpdate(), 'string', 'min:8', 'confirmed']
+        ]);
+
+        if ($validator->fails()) {
+            Alert::error('error', implode(' ', $validator->errors()->all()));
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $user->password = bcrypt($request->password);
+
+            try {
+                $user->save();
+                Alert::success('success', 'Selamat, password anda berhasil diubah!');
+            } catch (\Throwable $th) {
+                Alert::error('error', 'Oopss!' . $th->getMessage());
+            }
+
+            return redirect()->back();
+        }
+    }
+
 
     public function isUpdate()
     {
