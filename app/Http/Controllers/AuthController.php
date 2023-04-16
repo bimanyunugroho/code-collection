@@ -61,14 +61,14 @@ class AuthController extends Controller
 
     public function login(Request $request) {
 
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->only([$this->username(), 'password']);
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
             Alert::success('success', 'Selamat anda berhasil masuk!');
             return redirect()->intended('/home');
         } else {
-            Alert::error('error', 'Email dan password salah!');
+            Alert::error('error', 'Email/username dan password salah!');
             return redirect()->back();
         }
     }
@@ -77,6 +77,14 @@ class AuthController extends Controller
         Auth::logout();
         Alert::success('success', 'Anda berhasil keluar.');
         return redirect()->route('login.index');
+    }
+
+    public function username()
+    {
+        $login = request()->input('username');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$field => $login]);
+        return $field;
     }
 
 }

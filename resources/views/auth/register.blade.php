@@ -35,10 +35,20 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password" required>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleInputPassword"><i class="fa fa-eye"></i></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" name="password_confirmation" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" name="password_confirmation" required>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleRepeatPassword"><i class="fa fa-eye"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-user btn-block" type="submit">Register</button>
@@ -83,6 +93,19 @@
                 $('input[name="password_confirmation"]').removeClass('is-invalid').addClass('is-valid');
             } else {
                 $('input[name="password_confirmation"]').removeClass('is-valid').addClass('is-invalid');
+            }
+        });
+
+        $('.toggle-password').on('click', function() {
+            var input = $($(this).attr('data-input'));
+            var icon = $(this).find('i');
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
             }
         });
     });

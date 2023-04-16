@@ -16,13 +16,17 @@
                 @csrf
                 @method('POST')
                 <div class="form-group">
-                    <input type="email" class="form-control form-control-user"
-                        id="exampleInputEmail" aria-describedby="emailHelp"
-                        placeholder="Enter Email Address..." name="email" required autocomplete="false" autofocus>
+                    <input type="text" name="username" id="username" class="form-control form-control-user"
+                        placeholder="Enter email/username..." required autocomplete="false" autofocus>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control form-control-user"
-                        id="exampleInputPassword" placeholder="Password" name="password" required autocomplete="false">
+                    <div class="input-group">
+                        <input type="password" class="form-control form-control-user"
+                            id="exampleInputPassword" placeholder="Password" name="password" required autocomplete="false">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="password-toggle"><i class="fas fa-eye"></i></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-checkbox small">
@@ -58,6 +62,18 @@
                 '<b>Lupa password</b>, masih dalam pengembangan kami!',
                 'warning'
             );
+        });
+
+        $('#password-toggle').on('click', function() {
+            var passwordField = $('#exampleInputPassword');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType == 'password') {
+                passwordField.attr('type', 'text');
+                $(this).html('<i class="fas fa-eye-slash"></i>');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).html('<i class="fas fa-eye"></i>');
+            }
         });
     });
 </script>
