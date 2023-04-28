@@ -46,7 +46,7 @@
                         <div class="input-group">
                             <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" name="password_confirmation" required>
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleRepeatPassword"><i class="fa fa-eye"></i></button>z
+                                <button type="button" class="btn btn-sm btn-outline-secondary toggle-password" data-input="#exampleRepeatPassword"><i class="fa fa-eye"></i></button>
                             </div>
                         </div>
                     </div>

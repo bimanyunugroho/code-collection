@@ -95,8 +95,12 @@
                 <div class="container-fluid">
 
                     @if(auth()->check() && (request()->is('/') || request()->is('home')))
-                    <h1>Selamat Datang, <span style="border-bottom: 5px solid #3b61d1;">{{ auth()->user()->username }}</span></h1>
-                @endif
+                        <h1>Selamat Datang, <span style="border-bottom: 5px solid #3b61d1; font-weight: bold;">{{ auth()->user()->username }}</span></h1>
+
+                        <div class="row my-4">
+                            @yield('dashboards')
+                        </div>
+                    @endif
 
 
                     <!-- Page Heading -->
