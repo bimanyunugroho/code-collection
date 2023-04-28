@@ -54,4 +54,23 @@
         </div>
     </div>
 </div>
+
+<div class="col-lg-6 mb-4">
+
+    <!-- Illustrations -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Apakah itu <b>Code Collection</b> ?</h6>
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ asset('templates') }}/img/undraw_posting_photo.svg" alt="...">
+            </div>
+            <p>Aplikasi yang digunakan untuk menyimpan berbagai kode untuk keperluan dokumentasi,
+                sehingga nantinya dapat diakses dengan mudah tanpa perlu browsing atau membuka project lagi!</p>
+            <a target="_blank" rel="nofollow" href="" class="badge badge-primary">Traktir Developer...</a> <span class="badge badge-success">👈</span>
+        </div>
+    </div>
+
+</div>
 @endsection
