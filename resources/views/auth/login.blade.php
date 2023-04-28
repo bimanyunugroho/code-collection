@@ -36,14 +36,19 @@
                 </div>
 
                 <button class="btn btn-primary btn-block btn-user" type="submit">Login</button>
+
+                <hr>
+                <a href="#" class="btn btn-google btn-user btn-block mb-2 btnGoogle">
+                    <i class="fab fa-google fa-fw"></i> Register with Google
+                </a>
+
+                <div class="text-center">
+                    <a class="small btnForgot" href="#">Lupa Password?</a>
+                </div>
+                <div class="text-center">
+                    <a class="small" href="{{ route('register.index') }}">Buat akun baru!</a>
+                </div>
             </form>
-            <hr>
-            <div class="text-center">
-                <a class="small btnForgot" href="#">Lupa Password?</a>
-            </div>
-            <div class="text-center">
-                <a class="small" href="{{ route('register.index') }}">Buat akun baru!</a>
-            </div>
         </div>
     </div>
 </div>
@@ -74,6 +79,14 @@
                 passwordField.attr('type', 'password');
                 $(this).html('<i class="fas fa-eye"></i>');
             }
+        });
+
+        $('.btnGoogle').on('click', function() {
+            Swal.fire(
+                'Oops!',
+                '<b>Register with Google</b>, masih dalam pengembangan kami!',
+                'warning'
+            );
         });
     });
 </script>

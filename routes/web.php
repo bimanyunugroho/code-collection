@@ -26,11 +26,6 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
-    Route::get('/conn', function() {
-        $result = DB::select("SELECT * FROM version()");
-        return $result[0]->version;
-    });
-
     /* Route Type Controller */
     Route::resource('/type', TypeController::class);
     Route::get('serverside_type', [TypeController::class, 'getServersideType'])->name('getServersideType');

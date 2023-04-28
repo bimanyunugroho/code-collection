@@ -52,11 +52,15 @@
                     </div>
                 </div>
                 <button class="btn btn-primary btn-user btn-block" type="submit">Register</button>
+
+                <hr>
+                <a href="#" class="btn btn-google btn-user btn-block btnGoogle">
+                    <i class="fab fa-google fa-fw"></i> Register with Google
+                </a>
+                <div class="text-center">
+                    <a class="small" href="{{ route('login.index') }}">Sudah punya akun? Login!</a>
+                </div>
             </form>
-            <hr>
-            <div class="text-center">
-                <a class="small" href="{{ route('login.index') }}">Sudah punya akun? Login!</a>
-            </div>
         </div>
     </div>
 </div>
@@ -107,6 +111,14 @@
                 input.attr('type', 'password');
                 icon.removeClass('fa-eye-slash').addClass('fa-eye');
             }
+        });
+
+        $('.btnGoogle').on('click', function() {
+            Swal.fire(
+                'Oops!',
+                '<b>Register with Google</b>, masih dalam pengembangan kami!',
+                'warning'
+            );
         });
     });
 </script>
